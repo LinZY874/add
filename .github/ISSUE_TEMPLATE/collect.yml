@@ -1,0 +1,46 @@
+name: 添加一条收藏
+description: 收集提示词、风格化图片或教程链接；整理后进入网站。
+title: "[收藏] "
+body:
+  - type: dropdown
+    id: type
+    attributes:
+      label: 分类
+      options:
+        - 提示词
+        - 风格化图片
+        - 教程链接
+    validations:
+      required: true
+  - type: input
+    id: title
+    attributes:
+      label: 收藏标题
+      description: 用一个方便回看的标题描述素材。
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: 原始链接与作者
+      description: 有原始出处时请填写，自己的内容可注明原创。
+  - type: textarea
+    id: material
+    attributes:
+      label: 素材与上下文
+      description: 粘贴提示词、教程链接或图片来源，并说明必要的上下文。上传图片前请确认可以公开分享。
+    validations:
+      required: true
+  - type: textarea
+    id: reuse
+    attributes:
+      label: 为什么值得留，以后想怎么用
+      description: 可以填写风格特征、适用场景、学习目标、标签或想关联的已有收藏。
+  - type: textarea
+    id: rights
+    attributes:
+      label: 授权或待核实事项
+      description: 如有转载许可、使用限制或未确认的信息，请一并注明。公开访问不代表允许转载。
+  - type: markdown
+    attributes:
+      value: "请勿提交密码、密钥、私人联系方式或私密材料。此 Issue 是收集入口，需整理并发布后才会出现在网站。"

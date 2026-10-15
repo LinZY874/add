@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ADD collection",
+  "description": "Canonical collection data. scripts/build.mjs also checks unique IDs, references, real dates, safe URLs, and local image existence.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "updatedAt", "items"],
+  "properties": {
+    "version": { "const": 1 },
+    "updatedAt": { "$ref": "#/$defs/date" },
+    "items": { "type": "array", "items": { "$ref": "#/$defs/item" } }
+  },
+  "$defs": {
+    "date": { "type": "string", "format": "date", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "text": { "type": "string", "minLength": 1, "pattern": "\\S" },
+    "strings": { "type": "array", "items": { "$ref": "#/$defs/text" }, "uniqueItems": true },
+    "webUrl": { "type": "string", "format": "uri", "pattern": "^https?://" },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url"],
+      "properties": {
+        "url": { "$ref": "#/$defs/webUrl" },
+        "title": { "$ref": "#/$defs/text" },
+        "author": { "$ref": "#/$defs/text" }
+      }
+    },
+    "image": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["src", "alt"],
+      "properties": {
+        "src": {
+          "anyOf": [
+            { "$ref": "#/$defs/webUrl" },
+            { "type": "string", "pattern": "^assets/[A-Za-z0-9_][A-Za-z0-9._-]*(/[A-Za-z0-9_][A-Za-z0-9._-]*)*$" }
+          ]
+        },
+        "alt": { "$ref": "#/$defs/text" }
+      }
+    },
+    "item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "type", "title", "summary", "tags", "createdAt"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,79}$" },
+        "type": { "enum": ["prompt", "image", "tutorial"] },
+        "title": { "$ref": "#/$defs/text" },
+        "summary": { "$ref": "#/$defs/text" },
+        "tags": { "$ref": "#/$defs/strings" },
+        "createdAt": { "$ref": "#/$defs/date" },
+        "source": { "$ref": "#/$defs/source" },
+        "content": { "type": "string" },
+        "image": { "$ref": "#/$defs/image" },
+        "notes": { "type": "string" },
+        "related": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,79}$" } },
+        "status": { "enum": ["inbox", "organized", "used"] },
+        "topics": { "$ref": "#/$defs/strings" }
+      },
+      "allOf": [
+        { "if": { "properties": { "type": { "const": "prompt" } } }, "then": { "required": ["content"], "properties": { "content": { "$ref": "#/$defs/text" } } } },
+        { "if": { "properties": { "type": { "const": "image" } } }, "then": { "anyOf": [{ "required": ["image"] }, { "required": ["source"] }] } },
+        { "if": { "properties": { "type": { "const": "tutorial" } } }, "then": { "required": ["source"] } }
+      ]
+    }
+  }
+}

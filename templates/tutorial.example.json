@@ -1,0 +1,18 @@
+{
+  "id": "replace-with-your-tutorial-id",
+  "type": "tutorial",
+  "title": "示例模板：替换成教程标题",
+  "summary": "替换为教程教授的内容、适合人群及值得回看的原因。此条仅为格式示例。",
+  "tags": ["替换工具或技能标签"],
+  "createdAt": "2026-10-15",
+  "source": {
+    "url": "https://example.com/tutorial-source",
+    "title": "替换为原始教程标题",
+    "author": "替换为原作者"
+  },
+  "content": "替换为自己的课程摘记或学习提纲，不复制未经授权的完整教程。",
+  "notes": "替换为学习前提、适用版本、想实践的项目与待核实事项。",
+  "related": [],
+  "status": "inbox",
+  "topics": ["替换主题"]
+}

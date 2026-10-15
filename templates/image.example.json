@@ -1,0 +1,21 @@
+{
+  "id": "replace-with-your-image-id",
+  "type": "image",
+  "title": "示例模板：替换成图片或风格标题",
+  "summary": "替换为图片的构图、配色、材质或光线特征。此条仅为格式示例。",
+  "tags": ["替换风格标签"],
+  "createdAt": "2026-10-15",
+  "source": {
+    "url": "https://example.com/image-source",
+    "title": "替换为原始来源标题",
+    "author": "替换为原作者"
+  },
+  "image": {
+    "src": "https://example.com/reference.jpg",
+    "alt": "替换为具体的图片内容说明"
+  },
+  "notes": "替换为收藏原因、预期使用方向与明确的图片授权信息；授权未确认时应移除 image 字段，仅保存来源链接。",
+  "related": [],
+  "status": "inbox",
+  "topics": ["替换主题"]
+}

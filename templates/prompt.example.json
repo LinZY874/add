@@ -1,0 +1,18 @@
+{
+  "id": "replace-with-your-prompt-id",
+  "type": "prompt",
+  "title": "示例模板：替换成提示词标题",
+  "summary": "替换为这条提示词解决的问题及适用场景。此条仅为格式示例。",
+  "tags": ["替换标签"],
+  "createdAt": "2026-10-15",
+  "source": {
+    "url": "https://example.com/prompt-source",
+    "title": "替换为原始来源标题",
+    "author": "替换为原作者"
+  },
+  "content": "替换为提示词原文；保留变量，例如 {{主题}}、{{目标读者}}。",
+  "notes": "替换为收藏原因、输入要求、可复用步骤与原文授权信息。",
+  "related": [],
+  "status": "inbox",
+  "topics": ["替换主题"]
+}
