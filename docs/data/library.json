@@ -303,6 +303,155 @@
         "封面提示词",
         "风格探索与迭代"
       ]
+    },
+    {
+      "id": "module-three-commercial-visuals-20261019",
+      "type": "image",
+      "title": "模块三 · AI 商业视觉封面与选稿",
+      "summary": "kimi-style 系列封面：首轮 6 张，加上课 1、课 4、课 6 第二轮的 9 张候选图，共 15 张合为一条收藏。已标注最终选择：课 1 方向 3、课 4 方向 2、课 6 方向 2。",
+      "tags": [
+        "AI 商业视觉",
+        "kimi-style",
+        "微信服务号",
+        "系列封面",
+        "风格迭代",
+        "最终选稿"
+      ],
+      "createdAt": "2026-10-19",
+      "content": "【模块三 封面提示词】\n\n使用技能【/技能库/朋克封面】里的kimi-style，给【'/模块三 AI商业视觉'】这里面的6篇文章配封面图。6张图不用刻意保持公式化的一致，这样会呆板。6张图可以适当“各自精彩”，需要在视觉上看起来是一个系列即可。6张图的第一张（课1的封面），需要承担“开山祖师”的地位，就是说“厚重一些，稳重一些，中心对称最好“。 封面图的尺寸，按照微信公众号的封面来定。\n\n【第二轮反馈提示词】\n\n课1（不用对称了）， 课4， 课6（青花瓷变成灰色 呆板了），再分别生成3张不同方向或不同内容的，我来挑挑看",
+      "image": {
+        "src": "assets/images/module-three-commercial-visuals-20261019/09-revision-lesson1-c-selected.png",
+        "alt": "浅灰绿色背景，黑色石块、白色拱门与完整微缩建筑从左下向右上递进，配有设计草图和直尺，右侧为 AI 生图、保姆级入门教程标题"
+      },
+      "gallery": [
+        {
+          "src": "assets/images/module-three-commercial-visuals-20261019/01-initial-lesson1.png",
+          "alt": "浅灰绿桌面静物封面，中央金属相机光圈装置左右各放一枚透明圆形玻璃镜片，下方以黑色衬线字写“AI生图”和“保姆级入门教程”。",
+          "role": "result",
+          "caption": "图 1 · 首轮 · 课 1 · AI 生图 · 保姆级入门教程"
+        },
+        {
+          "src": "assets/images/module-three-commercial-visuals-20261019/02-initial-lesson2.png",
+          "alt": "浅灰绿桌面封面，左侧黑色衬线标题“AI生图 IP创建”，右侧为白蓝色方形角色、同形状的灰色模具和一把木柄雕刻工具。",
+          "role": "result",
+          "caption": "图 2 · 首轮 · 课 2 · AI 生图 · IP 创建"
+        },
+        {
+          "src": "assets/images/module-three-commercial-visuals-20261019/03-initial-lesson3.png",
+          "alt": "浅灰绿背景封面，左侧黑色衬线标题“AI生图 IP延展”，右侧同一白蓝方形角色分别呈现哑光、毛绒和亮面三种材质。",
+          "role": "result",
+          "caption": "图 3 · 首轮 · 课 3 · AI 生图 · IP 延展"
+        },
+        {
+          "src": "assets/images/module-three-commercial-visuals-20261019/04-initial-lesson4.png",
+          "alt": "浅灰绿桌面上摊开一本白色杂志，左页有灰色文章线条，右页嵌入台阶、拱门、圆球与绿枝构成的微缩场景，金属空框斜覆其上；右侧标题为“AI生图 文章配图”。",
+          "role": "result",
+          "caption": "图 4 · 首轮 · 课 4 · AI 生图 · 文章配图"
+        },
+        {
+          "src": "assets/images/module-three-commercial-visuals-20261019/05-initial-lesson5.png",
+          "alt": "浅灰绿背景的俯视静物封面，左上为黑色衬线标题“AI生图 品牌视觉全案”，右上摆放咖啡馆空间模型，下方陈列拉花咖啡、棕色织物、灰绿色材质块与绿枝。",
+          "role": "result",
+          "caption": "图 5 · 首轮 · 课 5 · AI 生图 · 品牌视觉全案"
+        },
+        {
+          "src": "assets/images/module-three-commercial-visuals-20261019/06-initial-lesson6.png",
+          "alt": "浅灰绿桌面封面，左侧标题“AI生图 热门案例 精讲”，右上倾倒的青花瓷杯中延伸出立体蓝白山水与松树，右下另有一小段山水画面胶片。",
+          "role": "result",
+          "caption": "图 6 · 首轮 · 课 6 · AI 生图 · 热门案例精讲"
+        },
+        {
+          "src": "assets/images/module-three-commercial-visuals-20261019/07-revision-lesson1-a.png",
+          "alt": "浅灰绿色背景，左侧为 AI 生图、保姆级入门教程黑色标题，右侧黑色画框叠放蓝黄透明色片与折射光线的玻璃棱镜",
+          "role": "result",
+          "caption": "图 7 · 第二轮 · 课 1 · 方向 1 · AI 生图｜保姆级入门教程"
+        },
+        {
+          "src": "assets/images/module-three-commercial-visuals-20261019/08-revision-lesson1-b.png",
+          "alt": "浅灰绿色背景，左侧打开的墨绿色工具盒分格收纳玻璃透镜、白色方块、橙色颜料瓶与布料，右侧为 AI 生图、保姆级入门教程黑色标题",
+          "role": "result",
+          "caption": "图 8 · 第二轮 · 课 1 · 方向 2 · AI 生图｜保姆级入门教程"
+        },
+        {
+          "src": "assets/images/module-three-commercial-visuals-20261019/09-revision-lesson1-c-selected.png",
+          "alt": "浅灰绿色背景，黑色石块、白色拱门与完整微缩建筑从左下向右上递进，配有设计草图和直尺，右侧为 AI 生图、保姆级入门教程标题",
+          "role": "result",
+          "caption": "图 9 · 第二轮 · 课 1 · 方向 3 · AI 生图｜保姆级入门教程【最终选择】"
+        },
+        {
+          "src": "assets/images/module-three-commercial-visuals-20261019/10-revision-lesson4-a.png",
+          "alt": "浅灰绿色背景，文章纸张上的横线延伸成木质路径，分别通向微缩绿树、琥珀色玻璃球与白色拱门，左上为 AI 生图、文章配图标题",
+          "role": "result",
+          "caption": "图 10 · 第二轮 · 课 4 · 方向 1 · AI 生图｜文章配图"
+        },
+        {
+          "src": "assets/images/module-three-commercial-visuals-20261019/11-revision-lesson4-b-selected.png",
+          "alt": "浅灰绿色背景，横线纸上并排放置两只黑色放大镜，分别框住白蓝机器人和三个以橙线连接的白色节点，右侧为 AI 生图、文章配图标题",
+          "role": "result",
+          "caption": "图 11 · 第二轮 · 课 4 · 方向 2 · AI 生图｜文章配图【最终选择】"
+        },
+        {
+          "src": "assets/images/module-three-commercial-visuals-20261019/12-revision-lesson4-c.png",
+          "alt": "浅灰绿色背景，右侧白色折页依次展示种子、嫩芽与叶片，周围搭配绿叶和布料，左侧为 AI 生图、文章配图黑色标题",
+          "role": "result",
+          "caption": "图 12 · 第二轮 · 课 4 · 方向 3 · AI 生图｜文章配图"
+        },
+        {
+          "src": "assets/images/module-three-commercial-visuals-20261019/13-revision-lesson6-a.png",
+          "alt": "浅灰绿色背景，倾斜青花瓷碗中流出立体蓝色陶瓷波浪，橙白与蓝白锦鲤置于浪间，左侧为 AI 生图、热门案例精讲标题",
+          "role": "result",
+          "caption": "图 13 · 第二轮 · 课 6 · 方向 1 · AI 生图｜热门案例精讲"
+        },
+        {
+          "src": "assets/images/module-three-commercial-visuals-20261019/14-revision-lesson6-b-selected.png",
+          "alt": "浅灰绿色背景，左侧橙子穿过银色圆环组成行星意象，下方弯曲橙皮上放置微型探测车，右侧为 AI 生图、热门案例精讲标题",
+          "role": "result",
+          "caption": "图 14 · 第二轮 · 课 6 · 方向 2 · AI 生图｜热门案例精讲【最终选择】"
+        },
+        {
+          "src": "assets/images/module-three-commercial-visuals-20261019/15-revision-lesson6-c.png",
+          "alt": "浅灰绿色背景，右侧墨绿色玻璃培养皿内有金色蜂蜜液体，配以滴管、蜂巢与蜜滴，左侧为 AI 生图、热门案例精讲黑色标题",
+          "role": "result",
+          "caption": "图 15 · 第二轮 · 课 6 · 方向 3 · AI 生图｜热门案例精讲"
+        }
+      ],
+      "attachments": [
+        {
+          "title": "最终选择 · 课 1 · 方向 3",
+          "src": "assets/images/module-three-commercial-visuals-20261019/09-revision-lesson1-c-selected.png",
+          "description": "第二轮 · 课 1 · 方向 3 · AI 生图｜保姆级入门教程"
+        },
+        {
+          "title": "最终选择 · 课 4 · 方向 2",
+          "src": "assets/images/module-three-commercial-visuals-20261019/11-revision-lesson4-b-selected.png",
+          "description": "第二轮 · 课 4 · 方向 2 · AI 生图｜文章配图"
+        },
+        {
+          "title": "最终选择 · 课 6 · 方向 2",
+          "src": "assets/images/module-three-commercial-visuals-20261019/14-revision-lesson6-b-selected.png",
+          "description": "第二轮 · 课 6 · 方向 2 · AI 生图｜热门案例精讲"
+        },
+        {
+          "title": "轮次与最终选稿索引（JSON）",
+          "src": "assets/files/module-three-commercial-visuals-20261019/selection-index.json",
+          "description": "记录 15 张图的课程、轮次、候选方向与用户明确标注的 3 张最终选择。"
+        },
+        {
+          "title": "原始需求与第二轮反馈（Markdown）",
+          "src": "assets/files/module-three-commercial-visuals-20261019/original-requests-and-feedback.md",
+          "description": "完整保留两轮提示词，方便回看创作要求的变化。"
+        }
+      ],
+      "notes": "归档方式：首轮 6 张与第二轮 9 张合并为一条风格图片收藏。首轮依次对应课 1～6；第二轮依次为课 1 的三个方向、课 4 的三个方向、课 6 的三个方向。\n\n最终选择：课 1 选择第二轮方向 3，课 4 选择第二轮方向 2，课 6 选择第二轮方向 2；均按用户明确标记保存。列表封面使用课 1 的最终方案，详情顶部提供三张最终原图入口。\n\n迭代记录：初始要求第一课厚重、稳重、尽量中心对称；第二轮反馈取消第一课的对称要求，并要求课 1、4、6 各补充三个不同方向或内容，指出课 6 青花瓷变灰后显得呆板。原始措辞完整保留。\n\n风格观察（整理笔记）：以浅灰绿背景、实物静物隐喻、材质细节和克制标题保持系列感，各课通过不同道具与构图区分主题。最终选稿分别采用石材与建筑模型、双放大镜与配图元素、橙子星球与探测车等视觉表达。\n\n调用方式：可按课程、轮次和候选方向读取附件中的 JSON 索引，userMarkedFinal 标明用户是否明确标注最终选择。相关收藏中保存了朋克封面技能包，便于后续参考复用。\n\n来源：图片与两轮提示词均由用户提供。原始图片完整保留，未裁切或重新生成；本次只归档指定的 15 张图片。",
+      "related": [
+        "module-one-punk-covers-20261019"
+      ],
+      "status": "organized",
+      "topics": [
+        "AIGC 课程模块三",
+        "AI 商业视觉",
+        "封面迭代与选稿"
+      ]
     }
   ]
 }

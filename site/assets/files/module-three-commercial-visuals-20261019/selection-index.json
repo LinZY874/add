@@ -1,0 +1,226 @@
+{
+  "version": 1,
+  "collectionId": "module-three-commercial-visuals-20261019",
+  "style": "kimi-style",
+  "prompts": {
+    "initial": "使用技能【/技能库/朋克封面】里的kimi-style，给【'/模块三 AI商业视觉'】这里面的6篇文章配封面图。6张图不用刻意保持公式化的一致，这样会呆板。6张图可以适当“各自精彩”，需要在视觉上看起来是一个系列即可。6张图的第一张（课1的封面），需要承担“开山祖师”的地位，就是说“厚重一些，稳重一些，中心对称最好“。 封面图的尺寸，按照微信公众号的封面来定。",
+    "feedback": "课1（不用对称了）， 课4， 课6（青花瓷变成灰色 呆板了），再分别生成3张不同方向或不同内容的，我来挑挑看"
+  },
+  "images": [
+    {
+      "number": 1,
+      "round": 1,
+      "lesson": 1,
+      "variant": null,
+      "userMarkedFinal": false,
+      "src": "assets/images/module-three-commercial-visuals-20261019/01-initial-lesson1.png",
+      "caption": "首轮 · 课 1 · AI 生图 · 保姆级入门教程",
+      "originalFilename": "exec-fdd39e4c-8985-4b6c-9b22-0cad5ae67b59.png",
+      "sha256": "c216d8d2a189808bf59e6be351db5a8c978c77f9f5d73d7cd0c3049e74d7930b",
+      "width": 1921,
+      "height": 819
+    },
+    {
+      "number": 2,
+      "round": 1,
+      "lesson": 2,
+      "variant": null,
+      "userMarkedFinal": false,
+      "src": "assets/images/module-three-commercial-visuals-20261019/02-initial-lesson2.png",
+      "caption": "首轮 · 课 2 · AI 生图 · IP 创建",
+      "originalFilename": "exec-45ac525a-b034-4e2c-8292-23a135da713d.png",
+      "sha256": "366efcb82ecee372350adbb3e052eeae3d1ad28f1155721022bbdb12e69f22ba",
+      "width": 1920,
+      "height": 819
+    },
+    {
+      "number": 3,
+      "round": 1,
+      "lesson": 3,
+      "variant": null,
+      "userMarkedFinal": false,
+      "src": "assets/images/module-three-commercial-visuals-20261019/03-initial-lesson3.png",
+      "caption": "首轮 · 课 3 · AI 生图 · IP 延展",
+      "originalFilename": "exec-830251d5-f3da-49ba-8318-22228937a765.png",
+      "sha256": "5db1442cf00a7350411727e3e15012d084cadf2c185265a912a7d1047ea46d83",
+      "width": 1922,
+      "height": 818
+    },
+    {
+      "number": 4,
+      "round": 1,
+      "lesson": 4,
+      "variant": null,
+      "userMarkedFinal": false,
+      "src": "assets/images/module-three-commercial-visuals-20261019/04-initial-lesson4.png",
+      "caption": "首轮 · 课 4 · AI 生图 · 文章配图",
+      "originalFilename": "exec-ed9ddd7e-c4d1-44f7-b30a-ef7da817e2b4.png",
+      "sha256": "ad21d7066dc52e3749f89c3a7576902a7d056216ca20cf98236b0b1ceddbf524",
+      "width": 1921,
+      "height": 819
+    },
+    {
+      "number": 5,
+      "round": 1,
+      "lesson": 5,
+      "variant": null,
+      "userMarkedFinal": false,
+      "src": "assets/images/module-three-commercial-visuals-20261019/05-initial-lesson5.png",
+      "caption": "首轮 · 课 5 · AI 生图 · 品牌视觉全案",
+      "originalFilename": "exec-1c95ce2e-17bd-414b-96fe-0890e2e3252d.png",
+      "sha256": "3fd68587490a0b35bb37986c1bbeff7b29fdd1281121b4ee816797f7a071228a",
+      "width": 1921,
+      "height": 819
+    },
+    {
+      "number": 6,
+      "round": 1,
+      "lesson": 6,
+      "variant": null,
+      "userMarkedFinal": false,
+      "src": "assets/images/module-three-commercial-visuals-20261019/06-initial-lesson6.png",
+      "caption": "首轮 · 课 6 · AI 生图 · 热门案例精讲",
+      "originalFilename": "exec-8733b2c6-7f0d-481b-b92d-89cf31aa8d7d.png",
+      "sha256": "4f31fdc6733af251619af50f6b738c45baedc98280a5d5d5bbc3670fe5c71eae",
+      "width": 1921,
+      "height": 819
+    },
+    {
+      "number": 7,
+      "round": 2,
+      "lesson": 1,
+      "variant": 1,
+      "userMarkedFinal": false,
+      "src": "assets/images/module-three-commercial-visuals-20261019/07-revision-lesson1-a.png",
+      "caption": "第二轮 · 课 1 · 方向 1 · AI 生图｜保姆级入门教程",
+      "originalFilename": "exec-ac8feed0-e40e-4c54-a322-02c8557ede84.png",
+      "sha256": "5369e9d88e38e6519ef2d01da52f31758c08fd7737fa417a6cc10a116a8b2361",
+      "width": 1921,
+      "height": 819
+    },
+    {
+      "number": 8,
+      "round": 2,
+      "lesson": 1,
+      "variant": 2,
+      "userMarkedFinal": false,
+      "src": "assets/images/module-three-commercial-visuals-20261019/08-revision-lesson1-b.png",
+      "caption": "第二轮 · 课 1 · 方向 2 · AI 生图｜保姆级入门教程",
+      "originalFilename": "exec-895c4e48-a260-4425-9892-18a59636d108.png",
+      "sha256": "f860dfa07e2018c3c4361ce306f429091f296255eb02f64a0cefb8e2cb226faa",
+      "width": 1921,
+      "height": 819
+    },
+    {
+      "number": 9,
+      "round": 2,
+      "lesson": 1,
+      "variant": 3,
+      "userMarkedFinal": true,
+      "src": "assets/images/module-three-commercial-visuals-20261019/09-revision-lesson1-c-selected.png",
+      "caption": "第二轮 · 课 1 · 方向 3 · AI 生图｜保姆级入门教程【最终选择】",
+      "originalFilename": "exec-80137912-88fb-4ff1-9cfb-6f44d812dbe5.png",
+      "sha256": "f81cb65400f4ad419ae11d5fbba274eb3e052cb9cf3c776322cf0fa43dc89b77",
+      "width": 1919,
+      "height": 820
+    },
+    {
+      "number": 10,
+      "round": 2,
+      "lesson": 4,
+      "variant": 1,
+      "userMarkedFinal": false,
+      "src": "assets/images/module-three-commercial-visuals-20261019/10-revision-lesson4-a.png",
+      "caption": "第二轮 · 课 4 · 方向 1 · AI 生图｜文章配图",
+      "originalFilename": "exec-625d9f76-beb0-44a0-a70c-9aba9e86c478.png",
+      "sha256": "6b6c35958c3f1ec43430fd945cee70f048c22a92e82109ec0ea3425436eb92d5",
+      "width": 1921,
+      "height": 819
+    },
+    {
+      "number": 11,
+      "round": 2,
+      "lesson": 4,
+      "variant": 2,
+      "userMarkedFinal": true,
+      "src": "assets/images/module-three-commercial-visuals-20261019/11-revision-lesson4-b-selected.png",
+      "caption": "第二轮 · 课 4 · 方向 2 · AI 生图｜文章配图【最终选择】",
+      "originalFilename": "exec-a44274c1-4a94-4eb2-ad6f-f44115b97ae8.png",
+      "sha256": "8c5fe4237b20e791cd3c40f21eae125abce8e1d37d723b83f4dcd4dd21603fc0",
+      "width": 1920,
+      "height": 819
+    },
+    {
+      "number": 12,
+      "round": 2,
+      "lesson": 4,
+      "variant": 3,
+      "userMarkedFinal": false,
+      "src": "assets/images/module-three-commercial-visuals-20261019/12-revision-lesson4-c.png",
+      "caption": "第二轮 · 课 4 · 方向 3 · AI 生图｜文章配图",
+      "originalFilename": "exec-fee6f9f8-2698-40e3-8346-745d326e5f82.png",
+      "sha256": "4ba4ef65c37b324edd8413557932c419feebf33acca747eeaa336a8765efde1b",
+      "width": 1919,
+      "height": 820
+    },
+    {
+      "number": 13,
+      "round": 2,
+      "lesson": 6,
+      "variant": 1,
+      "userMarkedFinal": false,
+      "src": "assets/images/module-three-commercial-visuals-20261019/13-revision-lesson6-a.png",
+      "caption": "第二轮 · 课 6 · 方向 1 · AI 生图｜热门案例精讲",
+      "originalFilename": "exec-7cb0285d-79ea-4552-bac7-9cda03338648.png",
+      "sha256": "204cab19816e18a531fee26076611379cd4e9496d2a36340083c1d75faeb7679",
+      "width": 1922,
+      "height": 818
+    },
+    {
+      "number": 14,
+      "round": 2,
+      "lesson": 6,
+      "variant": 2,
+      "userMarkedFinal": true,
+      "src": "assets/images/module-three-commercial-visuals-20261019/14-revision-lesson6-b-selected.png",
+      "caption": "第二轮 · 课 6 · 方向 2 · AI 生图｜热门案例精讲【最终选择】",
+      "originalFilename": "exec-d84a6ca5-7c4a-45f0-ba1d-df9a4e1ccc07.png",
+      "sha256": "86dedaf72ed21ea889705b7e7294ec27c8e6387c9d4825e1dfa11410534628d1",
+      "width": 1921,
+      "height": 819
+    },
+    {
+      "number": 15,
+      "round": 2,
+      "lesson": 6,
+      "variant": 3,
+      "userMarkedFinal": false,
+      "src": "assets/images/module-three-commercial-visuals-20261019/15-revision-lesson6-c.png",
+      "caption": "第二轮 · 课 6 · 方向 3 · AI 生图｜热门案例精讲",
+      "originalFilename": "exec-9444b88f-0beb-42bb-b70c-cd0eb2c557d0.png",
+      "sha256": "8db10267fa1c9186ff7b6a5d6e7d9bea43463ec262e3a573952df8c41ddaa8ad",
+      "width": 1919,
+      "height": 820
+    }
+  ],
+  "finalSelections": [
+    {
+      "lesson": 1,
+      "variant": 3,
+      "src": "assets/images/module-three-commercial-visuals-20261019/09-revision-lesson1-c-selected.png",
+      "caption": "第二轮 · 课 1 · 方向 3 · AI 生图｜保姆级入门教程【最终选择】"
+    },
+    {
+      "lesson": 4,
+      "variant": 2,
+      "src": "assets/images/module-three-commercial-visuals-20261019/11-revision-lesson4-b-selected.png",
+      "caption": "第二轮 · 课 4 · 方向 2 · AI 生图｜文章配图【最终选择】"
+    },
+    {
+      "lesson": 6,
+      "variant": 2,
+      "src": "assets/images/module-three-commercial-visuals-20261019/14-revision-lesson6-b-selected.png",
+      "caption": "第二轮 · 课 6 · 方向 2 · AI 生图｜热门案例精讲【最终选择】"
+    }
+  ]
+}
