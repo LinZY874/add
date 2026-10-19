@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "ADD collection",
-  "description": "Canonical collection data. scripts/build.mjs also checks unique IDs, references, real dates, safe URLs, and local image existence.",
+  "description": "Canonical collection data. scripts/build.mjs also checks unique IDs, references, real dates, safe URLs, and local image/attachment existence.",
   "type": "object",
   "additionalProperties": false,
   "required": ["version", "updatedAt", "items"],
@@ -48,7 +48,8 @@
         "src": { "$ref": "#/$defs/imageSrc" },
         "alt": { "$ref": "#/$defs/text" },
         "role": { "enum": ["reference", "result"] },
-        "caption": { "$ref": "#/$defs/text" }
+        "caption": { "$ref": "#/$defs/text" },
+        "prompt": { "$ref": "#/$defs/text" }
       }
     },
     "generation": {
@@ -57,6 +58,16 @@
       "required": ["model"],
       "properties": {
         "model": { "$ref": "#/$defs/text" }
+      }
+    },
+    "attachment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["title", "src"],
+      "properties": {
+        "title": { "$ref": "#/$defs/text" },
+        "src": { "$ref": "#/$defs/imageSrc" },
+        "description": { "type": "string" }
       }
     },
     "item": {
@@ -75,6 +86,7 @@
         "image": { "$ref": "#/$defs/image" },
         "gallery": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/galleryImage" } },
         "generation": { "$ref": "#/$defs/generation" },
+        "attachments": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/attachment" } },
         "notes": { "type": "string" },
         "related": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,79}$" } },
         "status": { "enum": ["inbox", "organized", "used"] },

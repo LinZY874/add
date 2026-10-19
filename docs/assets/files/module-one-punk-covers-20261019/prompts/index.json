@@ -1,0 +1,83 @@
+{
+  "title": "模块一 · 朋克封面风格探索与迭代",
+  "images": [
+    {
+      "image": "01-lesson1-paper-cut.png",
+      "caption": "图 1 · 第一课 · 立体纸雕概念海报",
+      "promptFiles": [
+        "01-lesson1-paper-cut.md"
+      ]
+    },
+    {
+      "image": "02-lesson1-kimi.png",
+      "caption": "图 2 · 第一课 · kimi 风格",
+      "promptFiles": [
+        "02-lesson1-kimi.md"
+      ]
+    },
+    {
+      "image": "03-lesson1-interleaved-v2.png",
+      "caption": "图 3 · 第一课 · 超大标题图文穿插（修订版）",
+      "promptFiles": [
+        "03-lesson1-interleaved-v2-initial.md",
+        "03-lesson1-interleaved-v2-edit-01.md"
+      ]
+    },
+    {
+      "image": "04-lesson1-brand-connection.png",
+      "caption": "图 4 · 第一课 · 品牌协同连接",
+      "promptFiles": [
+        "04-lesson1-brand-connection.md"
+      ]
+    },
+    {
+      "image": "05-lesson1-bw-minimal.png",
+      "caption": "图 5 · 第一课 · 黑白极简概念",
+      "promptFiles": [
+        "05-lesson1-bw-minimal.md"
+      ]
+    },
+    {
+      "image": "06-lesson1-avant-geometry.png",
+      "caption": "图 6 · 第一课 · 黑白灰先锋几何",
+      "promptFiles": [
+        "06-lesson1-avant-geometry.md"
+      ]
+    },
+    {
+      "image": "07-lesson2-initial.png",
+      "caption": "图 7 · 第二课 · AI 工具选择指南（初版）",
+      "promptFiles": [
+        "07-lesson2-initial.md"
+      ]
+    },
+    {
+      "image": "08-lesson3.png",
+      "caption": "图 8 · 第三课 · 说清楚，AI 才听得懂",
+      "promptFiles": [
+        "08-lesson3.md"
+      ]
+    },
+    {
+      "image": "09-lesson4.png",
+      "caption": "图 9 · 第四课 · 说到位，AI 才用得上",
+      "promptFiles": [
+        "09-lesson4.md"
+      ]
+    },
+    {
+      "image": "10-lesson5.png",
+      "caption": "图 10 · 第五课 · 查得清，AI 才信得过",
+      "promptFiles": [
+        "10-lesson5.md"
+      ]
+    },
+    {
+      "image": "11-lesson2-feedback-v2.png",
+      "caption": "图 11 · 第二课 · AI 工具选择指南（反馈修订版）",
+      "promptFiles": [
+        "11-lesson2-feedback-v2.md"
+      ]
+    }
+  ]
+}

@@ -101,7 +101,7 @@
   function filteredItems() {
     const query = state.query.trim().toLocaleLowerCase();
     return (state.library?.items || []).filter(item => {
-      const text = [item.title, item.summary, item.content, item.notes, item.generation?.model, item.source?.title, item.source?.author, item.source?.url, ...(item.tags || []), ...(item.topics || []), ...(item.gallery || []).map(image => `${image.caption || ''} ${image.alt}`)].filter(Boolean).join(' ').toLocaleLowerCase();
+      const text = [item.title, item.summary, item.content, item.notes, item.generation?.model, item.source?.title, item.source?.author, item.source?.url, ...(item.tags || []), ...(item.topics || []), ...(item.gallery || []).map(image => `${image.caption || ''} ${image.alt} ${image.prompt || ''}`), ...(item.attachments || []).map(file => `${file.title} ${file.description || ''}`)].filter(Boolean).join(' ').toLocaleLowerCase();
       return (state.filter === 'all' || state.filter === item.type) && (!state.tag || item.tags.includes(state.tag)) && (!query || query.split(/\s+/).every(word => text.includes(word)));
     }).sort((a, b) => {
       if (state.sort === 'title') return a.title.localeCompare(b.title, 'zh-CN');
@@ -274,6 +274,24 @@
       generation.append(el('span', '', '使用模型'), el('strong', '', item.generation.model));
       root.append(generation);
     }
+    if (item.attachments?.length) {
+      const attachments = el('section', 'detail-attachments');
+      const heading = el('h3', 'detail-section-title', '附件与技能');
+      heading.id = 'attachments-title';
+      attachments.setAttribute('aria-labelledby', heading.id);
+      attachments.append(heading);
+      item.attachments.forEach(file => {
+        const url = imageUrl(file.src);
+        if (!url) return;
+        const link = outsideLink(url, '', 'attachment-link');
+        const description = el('span', 'attachment-description');
+        description.append(el('strong', '', file.title));
+        if (file.description) description.append(el('small', '', file.description));
+        link.append(description, icon(/\.zip(?:$|\?)/i.test(url) ? 'download' : 'arrow'));
+        attachments.append(link);
+      });
+      root.append(attachments);
+    }
     const gallery = item.gallery || [];
     if (gallery.length) {
       for (const [role, label] of [['reference', '参考图'], ['result', '生成结果']]) {
@@ -297,6 +315,16 @@
           const caption = el('figcaption', 'gallery-caption');
           caption.append(el('span', '', image.caption || `${label} ${index + 1}`), outsideLink(url, '查看原图 ↗'));
           figure.append(fullSize, caption);
+          if (image.prompt) {
+            const details = el('details', 'gallery-prompt');
+            details.append(el('summary', '', '查看这张图的提示词'));
+            const text = el('pre', 'gallery-prompt-text', image.prompt);
+            const copyPrompt = el('button', 'subtle-button');
+            copyPrompt.append(icon('copy'), document.createTextNode('复制这张图的提示词'));
+            copyPrompt.addEventListener('click', () => copy(image.prompt, '这张图的完整提示词已复制'));
+            details.append(text, copyPrompt);
+            figure.append(details);
+          }
           section.append(figure);
         });
         root.append(section);
@@ -311,10 +339,11 @@
     }
     if (item.content) {
       const contentHeading = el('div', 'detail-content-heading');
-      contentHeading.append(el('h3', 'detail-section-title', item.type === 'prompt' || item.generation ? '提示词原文' : '内容与要点'));
-      if (item.type !== 'prompt' && item.generation) {
+      const hasImagePrompts = gallery.some(image => image.prompt);
+      contentHeading.append(el('h3', 'detail-section-title', item.type === 'prompt' || item.generation ? '提示词原文' : hasImagePrompts ? '原始需求与反馈' : '内容与要点'));
+      if (item.type !== 'prompt' && (item.generation || hasImagePrompts)) {
         const copyPrompt = el('button', 'subtle-button');
-        copyPrompt.append(icon('copy'), document.createTextNode('复制提示词'));
+        copyPrompt.append(icon('copy'), document.createTextNode(hasImagePrompts ? '复制原始需求与反馈' : '复制提示词'));
         copyPrompt.addEventListener('click', () => copy(item.content, '完整提示词已复制'));
         contentHeading.append(copyPrompt);
       }
@@ -384,11 +413,20 @@
         images.forEach(image => {
           if (image.caption) lines.push('', escapeMarkdown(image.caption));
           lines.push('', markdownImage(image));
+          if (image.prompt) lines.push('', '#### 本图提示词', '', fenced(image.prompt));
         });
       }
     } else if (item.image?.src) lines.push('', markdownImage(item.image));
     if (item.content) lines.push('', item.type === 'prompt' || item.generation ? '### 提示词原文' : '### 内容', '', fenced(item.content));
     if (item.notes) lines.push('', '### 收藏理由与复用思路', '', escapeMarkdown(item.notes));
+    if (item.attachments?.length) {
+      lines.push('', '### 附件');
+      item.attachments.forEach(file => {
+        const url = imageUrl(file.src);
+        if (!url) return;
+        lines.push('', `- [${escapeMarkdown(file.title)}](${url.replace(/\(/g, '%28').replace(/\)/g, '%29')})${file.description ? ` — ${escapeMarkdown(file.description)}` : ''}`);
+      });
+    }
     if (item.related?.length) lines.push('', `关联收藏：${item.related.join('、')}`);
     return `${lines.join('\n')}\n`;
   }

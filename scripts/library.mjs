@@ -2,7 +2,7 @@ import { readFile } from 'node:fs/promises';
 
 export const ITEM_TYPES = ['prompt', 'image', 'tutorial'];
 export const ITEM_STATUSES = ['inbox', 'organized', 'used'];
-const ITEM_KEYS = ['id', 'type', 'title', 'summary', 'tags', 'createdAt', 'source', 'content', 'image', 'gallery', 'generation', 'notes', 'related', 'status', 'topics'];
+const ITEM_KEYS = ['id', 'type', 'title', 'summary', 'tags', 'createdAt', 'source', 'content', 'image', 'gallery', 'generation', 'attachments', 'notes', 'related', 'status', 'topics'];
 
 function object(value) {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
@@ -32,12 +32,13 @@ function validateImage(value, path, errors, gallery = false) {
     errors.push(`${path}: expected an object`);
     return;
   }
-  validateKeys(value, gallery ? ['src', 'alt', 'role', 'caption'] : ['src', 'alt'], path, errors);
+  validateKeys(value, gallery ? ['src', 'alt', 'role', 'caption', 'prompt'] : ['src', 'alt'], path, errors);
   if (!isWebUrl(value.src) && !isAssetPath(value.src)) errors.push(`${path}.src: expected an HTTP(S) URL or a safe assets/ path`);
   nonempty(value.alt, `${path}.alt`, errors);
   if (gallery) {
     if (!['reference', 'result'].includes(value.role)) errors.push(`${path}.role: expected reference or result`);
     if ('caption' in value) nonempty(value.caption, `${path}.caption`, errors);
+    if ('prompt' in value) nonempty(value.prompt, `${path}.prompt`, errors);
   }
 }
 
@@ -111,6 +112,20 @@ export function validateLibrary(library) {
         nonempty(item.generation.model, `${path}.generation.model`, errors);
       }
     }
+    if ('attachments' in item) {
+      if (!Array.isArray(item.attachments) || !item.attachments.length) errors.push(`${path}.attachments: expected a nonempty array`);
+      else item.attachments.forEach((attachment, attachmentIndex) => {
+        const attachmentPath = `${path}.attachments[${attachmentIndex}]`;
+        if (!object(attachment)) {
+          errors.push(`${attachmentPath}: expected an object`);
+          return;
+        }
+        validateKeys(attachment, ['title', 'src', 'description'], attachmentPath, errors);
+        nonempty(attachment.title, `${attachmentPath}.title`, errors);
+        if (!isWebUrl(attachment.src) && !isAssetPath(attachment.src)) errors.push(`${attachmentPath}.src: expected an HTTP(S) URL or a safe assets/ path`);
+        if ('description' in attachment && typeof attachment.description !== 'string') errors.push(`${attachmentPath}.description: expected a string`);
+      });
+    }
     if ('status' in item && !ITEM_STATUSES.includes(item.status)) errors.push(`${path}.status: expected inbox, organized, or used`);
     for (const key of ['topics', 'related']) if (key in item) stringList(item[key], `${path}.${key}`, errors);
     if (item.type === 'prompt') nonempty(item.content, `${path}.content (required for prompts)`, errors);
@@ -147,8 +162,9 @@ export function normalizeLibrary(library) {
     items: library.items.map(item => Object.fromEntries(ITEM_KEYS.filter(key => key in item).map(key => {
       if (key === 'source') return [key, Object.fromEntries(['url', 'title', 'author'].filter(field => field in item.source).map(field => [field, item.source[field]]))];
       if (key === 'image') return [key, { src: item.image.src, alt: item.image.alt }];
-      if (key === 'gallery') return [key, item.gallery.map(image => Object.fromEntries(['src', 'alt', 'role', 'caption'].filter(field => field in image).map(field => [field, image[field]])))];
+      if (key === 'gallery') return [key, item.gallery.map(image => Object.fromEntries(['src', 'alt', 'role', 'caption', 'prompt'].filter(field => field in image).map(field => [field, image[field]])))];
       if (key === 'generation') return [key, { model: item.generation.model }];
+      if (key === 'attachments') return [key, item.attachments.map(attachment => Object.fromEntries(['title', 'src', 'description'].filter(field => field in attachment).map(field => [field, attachment[field]])))];
       return [key, item[key]];
     })))
   };
