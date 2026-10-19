@@ -41,10 +41,21 @@ function itemMarkdown(item) {
     `- 标签：${item.tags.map(escapeMarkdown).join('、') || '暂无'}`,
     ...(item.topics?.length ? [`- 主题：${item.topics.map(escapeMarkdown).join('、')}`] : []),
     ...(item.source ? [`- 来源：[${escapeMarkdown(item.source.title || item.source.url)}](${linkUrl(item.source.url)})${item.source.author ? ` · ${escapeMarkdown(item.source.author)}` : ''}`] : []),
+    ...(item.generation ? [`- 使用模型：${escapeMarkdown(item.generation.model)}`] : []),
     '',
   ];
-  if (item.image) lines.push(`![${escapeMarkdown(item.image.alt)}](${linkUrl(isAssetPath(item.image.src) ? `../${item.image.src}` : item.image.src)})`, '');
-  if (item.content) lines.push(item.type === 'prompt' ? '## 提示词' : '## 内容', '', fenced(item.content), '');
+  if (item.gallery?.length) {
+    for (const [role, heading] of [['reference', '参考图'], ['result', '生成结果']]) {
+      const images = item.gallery.filter(image => image.role === role);
+      if (!images.length) continue;
+      lines.push(`## ${heading}`, '');
+      for (const image of images) {
+        lines.push(`![${escapeMarkdown(image.alt)}](${linkUrl(isAssetPath(image.src) ? `../${image.src}` : image.src)})`, '');
+        if (image.caption) lines.push(escapeMarkdown(image.caption), '');
+      }
+    }
+  } else if (item.image) lines.push(`![${escapeMarkdown(item.image.alt)}](${linkUrl(isAssetPath(item.image.src) ? `../${item.image.src}` : item.image.src)})`, '');
+  if (item.content) lines.push(item.type === 'prompt' ? '## 提示词' : item.type === 'image' && item.generation ? '## 提示词原文' : '## 内容', '', fenced(item.content), '');
   if (item.notes) lines.push('## 收藏备注', '', escapeMarkdown(item.notes), '');
   if (item.related?.length) lines.push('## 相关收藏', '', ...item.related.map(id => `- [${escapeMarkdown(id)}](./${id}.md)`), '');
   lines.push(`[返回全部收藏](./index.md) · [读取 JSON](../api/items/${item.id}.json)`, '');
@@ -105,7 +116,9 @@ try {
   const reserved = siteFiles.find(file => /^(api|data|entries)\//.test(file));
   if (reserved) throw new Error(`site/${reserved} conflicts with generated collection output; edit content/library.json instead`);
   for (const item of library.items) {
-    if (item.image && isAssetPath(item.image.src) && !siteFiles.includes(item.image.src)) throw new Error(`Image item "${item.id}" references missing site/${item.image.src}`);
+    for (const image of [...(item.image ? [item.image] : []), ...(item.gallery || [])]) {
+      if (isAssetPath(image.src) && !siteFiles.includes(image.src)) throw new Error(`Image item "${item.id}" references missing site/${image.src}`);
+    }
   }
   await absentOrDirectory(output);
   stage = await mkdtemp(path.join(root, '.build-'));

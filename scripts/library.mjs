@@ -2,7 +2,7 @@ import { readFile } from 'node:fs/promises';
 
 export const ITEM_TYPES = ['prompt', 'image', 'tutorial'];
 export const ITEM_STATUSES = ['inbox', 'organized', 'used'];
-const ITEM_KEYS = ['id', 'type', 'title', 'summary', 'tags', 'createdAt', 'source', 'content', 'image', 'notes', 'related', 'status', 'topics'];
+const ITEM_KEYS = ['id', 'type', 'title', 'summary', 'tags', 'createdAt', 'source', 'content', 'image', 'gallery', 'generation', 'notes', 'related', 'status', 'topics'];
 
 function object(value) {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
@@ -25,6 +25,20 @@ function stringList(value, path, errors) {
   }
   for (const [index, entry] of value.entries()) nonempty(entry, `${path}[${index}]`, errors);
   if (new Set(value).size !== value.length) errors.push(`${path}: duplicate values are not allowed`);
+}
+
+function validateImage(value, path, errors, gallery = false) {
+  if (!object(value)) {
+    errors.push(`${path}: expected an object`);
+    return;
+  }
+  validateKeys(value, gallery ? ['src', 'alt', 'role', 'caption'] : ['src', 'alt'], path, errors);
+  if (!isWebUrl(value.src) && !isAssetPath(value.src)) errors.push(`${path}.src: expected an HTTP(S) URL or a safe assets/ path`);
+  nonempty(value.alt, `${path}.alt`, errors);
+  if (gallery) {
+    if (!['reference', 'result'].includes(value.role)) errors.push(`${path}.role: expected reference or result`);
+    if ('caption' in value) nonempty(value.caption, `${path}.caption`, errors);
+  }
 }
 
 export function isDate(value) {
@@ -84,11 +98,17 @@ export function validateLibrary(library) {
       }
     }
     if ('image' in item) {
-      if (!object(item.image)) errors.push(`${path}.image: expected an object`);
+      validateImage(item.image, `${path}.image`, errors);
+    }
+    if ('gallery' in item) {
+      if (!Array.isArray(item.gallery) || !item.gallery.length) errors.push(`${path}.gallery: expected a nonempty array`);
+      else item.gallery.forEach((image, imageIndex) => validateImage(image, `${path}.gallery[${imageIndex}]`, errors, true));
+    }
+    if ('generation' in item) {
+      if (!object(item.generation)) errors.push(`${path}.generation: expected an object`);
       else {
-        validateKeys(item.image, ['src', 'alt'], `${path}.image`, errors);
-        if (!isWebUrl(item.image.src) && !isAssetPath(item.image.src)) errors.push(`${path}.image.src: expected an HTTP(S) URL or a safe assets/ path`);
-        nonempty(item.image.alt, `${path}.image.alt`, errors);
+        validateKeys(item.generation, ['model'], `${path}.generation`, errors);
+        nonempty(item.generation.model, `${path}.generation.model`, errors);
       }
     }
     if ('status' in item && !ITEM_STATUSES.includes(item.status)) errors.push(`${path}.status: expected inbox, organized, or used`);
@@ -127,6 +147,8 @@ export function normalizeLibrary(library) {
     items: library.items.map(item => Object.fromEntries(ITEM_KEYS.filter(key => key in item).map(key => {
       if (key === 'source') return [key, Object.fromEntries(['url', 'title', 'author'].filter(field => field in item.source).map(field => [field, item.source[field]]))];
       if (key === 'image') return [key, { src: item.image.src, alt: item.image.alt }];
+      if (key === 'gallery') return [key, item.gallery.map(image => Object.fromEntries(['src', 'alt', 'role', 'caption'].filter(field => field in image).map(field => [field, image[field]])))];
+      if (key === 'generation') return [key, { model: item.generation.model }];
       return [key, item[key]];
     })))
   };

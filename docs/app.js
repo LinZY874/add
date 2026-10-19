@@ -101,7 +101,7 @@
   function filteredItems() {
     const query = state.query.trim().toLocaleLowerCase();
     return (state.library?.items || []).filter(item => {
-      const text = [item.title, item.summary, item.content, item.notes, item.source?.title, item.source?.author, item.source?.url, ...(item.tags || []), ...(item.topics || [])].filter(Boolean).join(' ').toLocaleLowerCase();
+      const text = [item.title, item.summary, item.content, item.notes, item.generation?.model, item.source?.title, item.source?.author, item.source?.url, ...(item.tags || []), ...(item.topics || []), ...(item.gallery || []).map(image => `${image.caption || ''} ${image.alt}`)].filter(Boolean).join(' ').toLocaleLowerCase();
       return (state.filter === 'all' || state.filter === item.type) && (!state.tag || item.tags.includes(state.tag)) && (!query || query.split(/\s+/).every(word => text.includes(word)));
     }).sort((a, b) => {
       if (state.sort === 'title') return a.title.localeCompare(b.title, 'zh-CN');
@@ -204,6 +204,10 @@
         img.addEventListener('error', () => visual.replaceChildren(el('span', 'image-placeholder', '◒')));
         visual.append(img);
       } else visual.append(el('span', 'image-placeholder', '◒'));
+      if (item.gallery?.length) {
+        visual.classList.add('series-cover');
+        visual.append(el('span', 'gallery-count', `${item.gallery.length} 张图片`));
+      }
     } else {
       let host = 'TUTORIAL';
       try { host = new URL(item.source?.url).hostname.replace(/^www\./, ''); } catch {}
@@ -265,15 +269,56 @@
     const title = el('h2', '', item.title);
     title.id = 'detail-title'; title.tabIndex = -1;
     root.append(el('div', 'eyebrow', `COLLECTION / ${item.id}`), meta, title, el('p', 'detail-summary', item.summary));
+    if (item.generation?.model) {
+      const generation = el('div', 'generation-meta');
+      generation.append(el('span', '', '使用模型'), el('strong', '', item.generation.model));
+      root.append(generation);
+    }
+    const gallery = item.gallery || [];
+    if (gallery.length) {
+      for (const [role, label] of [['reference', '参考图'], ['result', '生成结果']]) {
+        const images = gallery.filter(image => image.role === role);
+        if (!images.length) continue;
+        const section = el('section', `detail-gallery gallery-${role}`);
+        const heading = el('h3', 'detail-section-title', `${label} · ${images.length} 张`);
+        heading.id = `gallery-${role}-title`;
+        section.setAttribute('aria-labelledby', heading.id);
+        section.append(heading);
+        images.forEach((image, index) => {
+          const url = imageUrl(image.src);
+          if (!url) return;
+          const figure = el('figure', 'gallery-figure');
+          const fullSize = outsideLink(url, '', 'gallery-image-link');
+          fullSize.setAttribute('aria-label', `查看原图：${image.caption || `${label} ${index + 1}`}`);
+          const img = el('img', 'gallery-image');
+          img.src = url; img.alt = image.alt; img.loading = 'lazy'; img.referrerPolicy = 'no-referrer';
+          img.addEventListener('error', () => img.replaceWith(el('p', 'detail-notes', '预览暂时无法显示，请打开原图查看。')));
+          fullSize.append(img);
+          const caption = el('figcaption', 'gallery-caption');
+          caption.append(el('span', '', image.caption || `${label} ${index + 1}`), outsideLink(url, '查看原图 ↗'));
+          figure.append(fullSize, caption);
+          section.append(figure);
+        });
+        root.append(section);
+      }
+    }
     const image = imageUrl(item.image?.src);
-    if (image) {
+    if (image && !gallery.length) {
       const img = el('img', 'detail-image');
       img.src = image; img.alt = item.image.alt; img.referrerPolicy = 'no-referrer';
       img.addEventListener('error', () => img.replaceWith(el('p', 'detail-notes', '图片暂时无法显示，可以通过下方来源链接查看。')));
       root.append(img);
     }
     if (item.content) {
-      root.append(el('h3', 'detail-section-title', item.type === 'prompt' ? '提示词原文' : '内容与要点'), el('div', 'detail-content-text', item.content));
+      const contentHeading = el('div', 'detail-content-heading');
+      contentHeading.append(el('h3', 'detail-section-title', item.type === 'prompt' || item.generation ? '提示词原文' : '内容与要点'));
+      if (item.type !== 'prompt' && item.generation) {
+        const copyPrompt = el('button', 'subtle-button');
+        copyPrompt.append(icon('copy'), document.createTextNode('复制提示词'));
+        copyPrompt.addEventListener('click', () => copy(item.content, '完整提示词已复制'));
+        contentHeading.append(copyPrompt);
+      }
+      root.append(contentHeading, el('div', 'detail-content-text', item.content));
     }
     if (item.notes) root.append(el('h3', 'detail-section-title', '收藏理由与复用思路'), el('p', 'detail-notes', item.notes));
     const tags = el('div', 'detail-tags');
@@ -324,10 +369,25 @@
   function itemMarkdown(item) {
     const lines = [`## ${escapeMarkdown(item.title)}`, '', `- ID：${item.id}`, `- 类型：${names[item.type]}`, `- 收录：${item.createdAt}`, `- 状态：${statuses[item.status || 'inbox']}`, `- 标签：${item.tags.map(escapeMarkdown).join('、') || '无'}`];
     if (item.topics?.length) lines.push(`- 主题：${item.topics.map(escapeMarkdown).join('、')}`);
+    if (item.generation?.model) lines.push(`- 使用模型：${escapeMarkdown(item.generation.model)}`);
     if (item.source?.url) lines.push(`- 来源：<${item.source.url.replace(/</g, '%3C').replace(/>/g, '%3E')}>`, ...(item.source.author ? [`- 作者：${escapeMarkdown(item.source.author)}`] : []));
     lines.push('', escapeMarkdown(item.summary));
-    if (item.image?.src) lines.push('', `![${escapeMarkdown(item.image.alt)}](${imageUrl(item.image.src).replace(/\(/g, '%28').replace(/\)/g, '%29')})`);
-    if (item.content) lines.push('', '### 内容', '', fenced(item.content));
+    const markdownImage = image => {
+      const url = imageUrl(image.src);
+      return url ? `![${escapeMarkdown(image.alt)}](${url.replace(/\(/g, '%28').replace(/\)/g, '%29')})` : '';
+    };
+    if (item.gallery?.length) {
+      for (const [role, label] of [['reference', '参考图'], ['result', '生成结果']]) {
+        const images = item.gallery.filter(image => image.role === role);
+        if (!images.length) continue;
+        lines.push('', `### ${label}`);
+        images.forEach(image => {
+          if (image.caption) lines.push('', escapeMarkdown(image.caption));
+          lines.push('', markdownImage(image));
+        });
+      }
+    } else if (item.image?.src) lines.push('', markdownImage(item.image));
+    if (item.content) lines.push('', item.type === 'prompt' || item.generation ? '### 提示词原文' : '### 内容', '', fenced(item.content));
     if (item.notes) lines.push('', '### 收藏理由与复用思路', '', escapeMarkdown(item.notes));
     if (item.related?.length) lines.push('', `关联收藏：${item.related.join('、')}`);
     return `${lines.join('\n')}\n`;

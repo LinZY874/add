@@ -4,7 +4,7 @@
 
 [打开网站](https://linzy874.github.io/add/) · [提交一条收藏](https://github.com/LinZY874/add/issues/new/choose)
 
-仓库和网站均为公开内容。当前从空白收藏开始，`templates/` 中的示例不会进入网站。
+仓库和网站均为公开内容。`templates/` 中的示例不会进入网站。
 
 ## 收藏什么
 

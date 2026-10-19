@@ -25,18 +25,38 @@
         "author": { "$ref": "#/$defs/text" }
       }
     },
+    "imageSrc": {
+      "anyOf": [
+        { "$ref": "#/$defs/webUrl" },
+        { "type": "string", "pattern": "^assets/[A-Za-z0-9_][A-Za-z0-9._-]*(/[A-Za-z0-9_][A-Za-z0-9._-]*)*$" }
+      ]
+    },
     "image": {
       "type": "object",
       "additionalProperties": false,
       "required": ["src", "alt"],
       "properties": {
-        "src": {
-          "anyOf": [
-            { "$ref": "#/$defs/webUrl" },
-            { "type": "string", "pattern": "^assets/[A-Za-z0-9_][A-Za-z0-9._-]*(/[A-Za-z0-9_][A-Za-z0-9._-]*)*$" }
-          ]
-        },
+        "src": { "$ref": "#/$defs/imageSrc" },
         "alt": { "$ref": "#/$defs/text" }
+      }
+    },
+    "galleryImage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["src", "alt", "role"],
+      "properties": {
+        "src": { "$ref": "#/$defs/imageSrc" },
+        "alt": { "$ref": "#/$defs/text" },
+        "role": { "enum": ["reference", "result"] },
+        "caption": { "$ref": "#/$defs/text" }
+      }
+    },
+    "generation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model"],
+      "properties": {
+        "model": { "$ref": "#/$defs/text" }
       }
     },
     "item": {
@@ -53,6 +73,8 @@
         "source": { "$ref": "#/$defs/source" },
         "content": { "type": "string" },
         "image": { "$ref": "#/$defs/image" },
+        "gallery": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/galleryImage" } },
+        "generation": { "$ref": "#/$defs/generation" },
         "notes": { "type": "string" },
         "related": { "type": "array", "uniqueItems": true, "items": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,79}$" } },
         "status": { "enum": ["inbox", "organized", "used"] },

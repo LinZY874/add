@@ -29,6 +29,8 @@
 - `source`: `{ "url": "https://…", "title": "来源标题", "author": "作者" }`。
 - `content`: 提示词原文、教程摘记或详细内容的字符串；不要把长篇受限原文整体复制进仓库。
 - `image`: `{ "src": "assets/images/example.webp", "alt": "图片内容说明" }`，也可使用允许公开引用的 HTTPS 图片地址。
+- `gallery`: 同一条收藏的多图数组，每张包含 `src`、`alt`、`role`（`reference` 为参考图，`result` 为生成结果），可补 `caption`。用户要求合并的参考图与成品放在一条收藏中，`image` 仅作为列表封面。
+- `generation`: `{ "model": "用户提供的模型名称" }`。忠实记录用户说明，不推断实际的底层图像模型；提示词原文保存在 `content`。
 - `notes`: 收藏原因、适用场景、许可说明、待核实事项及使用记录。
 - `related`: 已存在的其他条目 ID 数组。
 - `status`: `inbox`、`organized` 或 `used`。

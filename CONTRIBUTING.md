@@ -17,12 +17,16 @@
 | `source` | 可选的来源对象，包含 `url`，可补 `title`、`author` |
 | `content` | 可选的提示词原文、摘记或详细说明 |
 | `image` | 可选对象，包含 `src` 与描述性的 `alt` |
+| `gallery` | 可选的多图数组；每张包含 `src`、`alt`、`role`（`reference`／`result`），可补 `caption` |
+| `generation` | 可选对象，`model` 保存用户记录的使用模型名称 |
 | `notes` | 可选的收藏理由、使用场景、授权说明与待核实事项 |
 | `topics` | 可选的主题数组，用于组织长期方向 |
 | `related` | 可选的关联条目 ID 数组 |
 | `status` | 可选，`inbox`（待整理）、`organized`（已整理）、`used`（已使用） |
 
 提示词必须包含 `content`，教程必须包含 `source`。图片可以附上获得公开使用许可的 `image`；仅收藏图片来源时保留 `source` 与风格笔记。
+
+一组参考图与生成结果可以作为一条风格收藏：`image` 设置列表封面，`gallery` 保存全部图片及其角色，`generation.model` 记录模型，`content` 保留完整提示词。网页、JSON 与 Markdown 会同时保留这组关系。
 
 ## 用模板添加
 
