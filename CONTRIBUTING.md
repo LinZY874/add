@@ -21,6 +21,7 @@
 | `gallery[].prompt` | 可选，与单张图片对应的完整提示词，可标记初始和修订内容 |
 | `attachments` | 可选附件数组；每项包含 `title`、`src`，可补 `description`，支持安全的 `assets/…` 路径或 HTTP(S) 链接 |
 | `generation` | 可选对象，`model` 保存用户记录的使用模型名称 |
+| `layout` | 可选值 `prompt-results-process`，按提示词、结果、总结过程排列正文、图库和笔记 |
 | `notes` | 可选的收藏理由、使用场景、授权说明与待核实事项 |
 | `topics` | 可选的主题数组，用于组织长期方向 |
 | `related` | 可选的关联条目 ID 数组 |

@@ -1,0 +1,156 @@
+{
+  "version": 1,
+  "collectionId": "cream-navy-3d-style-study-20261029",
+  "title": "奶油白与海军蓝 3D 配图 · 提示词提炼与验证",
+  "model": "GPT-6.1 Sol Ultra",
+  "sourceTitle": "总结配图风格并生成验证",
+  "layout": "prompt-results-process",
+  "currentPrompt": "根据【主题/段落/标题】，用少量简洁的器物模型表达核心含义，绘制成熟克制的3D静物概念插图。暖奶油白无缝背景，深海军蓝为主、象牙白辅助；橙色仅集中用于承载核心含义的一处关键部件，形成唯一视觉焦点，其余元素统一蓝白，禁止零散橙色装饰。采用精致的工业设计模型质感：结构可信、比例自然、平整曲面、轻微倒角、均匀细腻的哑光涂层，无天然粗糙纹理。三分之四视角，柔和棚拍光、细腻接触阴影、充分留白。构图随内容决定，不固定对比；仅必要的简短中文标签。避免实景摄影、复杂布景、无关装饰、Q版拟人和儿童玩具感。",
+  "originalRequest": "1.示例。\n好的：【课2/01_月票与计量表.png】和【课2/02_看懂不等于画出.png】和【课2/03_同题试用.png】和【课3/02_桌面上的上下文.png】\n【课4/02_趁骨架还没封墙.png】\n不好的：\n【课3/03_方案的护栏.png】（低幼）\n\n2.需求：帮我总结以上图片的风格，最终生成一个提示词。\n3.生成的提示词，不需要额外加参考配图，让我之后可以给任何主题/段落/标题，生成这种配色和风格的图。\n4.注意，生成的图片不是一定要对比的，虽然给的参考图挺多对比的。\n5.请尽量简短，不要长篇大论。\n6.派出子agent生图（利用内置的的生图模型即可），生成后验证，如果不对，调整提示词重新生图。\n",
+  "userFeedback": "感觉橙色有些散乱，没有视觉重点",
+  "process": "来源：对话《总结配图风格并生成验证》。模型按用户要求记录为 GPT-6.1 Sol Ultra。\n\n1. 明确目标与边界\n从 5 张正向参考和 1 张反例中提炼通用风格，希望只替换主题、段落或标题就能生成相近配色与质感，不再附参考图；不把构图固定为左右对比，提示词尽量简短。用户对反例“方案的护栏”的评价是“低幼”。\n\n2. 首轮试画：收紧材质与画面信息量\n用“拆解任务”和“专注”无参考图试画。源对话检查认为，一张偏天然石材，另一张偏实景产品摄影，且物体和文字偏多；因此把材质收紧为统一哑光细砂树脂，并限制关键物体与标签数量，形成 v2。\n\n3. 第二轮试画：从“实物隐喻”改为“器物模型”\nv2 的“专注”更接近精致模型感，但“拆解任务”仍偏粗糙岩石。随后去掉“细砂”，改用“器物模型”，明确平整曲面、轻微倒角、均匀细腻哑光涂层及无天然粗糙纹理，形成 v3。\n\n4. 新主题与无参考图验证\n用 v3 在新的无图上下文中试画“拆解任务”和“信息筛选”，只替换主题，不额外指定构图；保留两张最终试画，作为材质与内容组织的验证记录。\n\n5. 根据用户反馈聚焦橙色\n用户反馈：“感觉橙色有些散乱，没有视觉重点”。将“少量亮橙点睛”进一步收紧为橙色只集中在承载核心含义的一处关键部件，其余元素统一蓝白，禁止零散橙色装饰；用“信息筛选”再次无参考图验证，橙色集中在关键内容的输出区域。源对话随后把这一版更新为当前通用提示词。\n\n6. 可复用结论（整理总结）\n成熟感需要同时约束比例、结构和材质；颜色不只要限制用量，还要明确位置与语义作用；器物模型服务于主题，不让参考中的对比构图变成固定模板。最后的聚焦配色版追加验证主题为“信息筛选”。",
+  "results": [
+    {
+      "src": "assets/images/cream-navy-3d-style-study-20261029/01-orange-focus-information.png",
+      "caption": "图 1 · 聚焦配色试画 · 信息筛选",
+      "stage": "orange-focus",
+      "theme": "信息筛选",
+      "promptTemplate": "assets/files/cream-navy-3d-style-study-20261029/final-prompt.txt",
+      "sha256": "a0797253b1c62094aa4eb6b97d8480bf5f4d5567b793be62740fe7f42fc59bc9",
+      "width": 1448,
+      "height": 1086
+    },
+    {
+      "src": "assets/images/cream-navy-3d-style-study-20261029/02-final-task-decomposition.png",
+      "caption": "图 2 · 最终试画 · 拆解任务",
+      "stage": "final",
+      "theme": "拆解任务",
+      "promptTemplate": "assets/files/cream-navy-3d-style-study-20261029/prompt-v3.txt",
+      "sha256": "2cf082969ca9473bfcbe92952c66a94ebd5d6b7745eb4679010046aed62199dc",
+      "width": 1448,
+      "height": 1086
+    },
+    {
+      "src": "assets/images/cream-navy-3d-style-study-20261029/03-final-information-filtering.png",
+      "caption": "图 3 · 最终试画 · 信息筛选",
+      "stage": "final",
+      "theme": "信息筛选",
+      "promptTemplate": "assets/files/cream-navy-3d-style-study-20261029/prompt-v3.txt",
+      "sha256": "c8b91b5bf058dad5a736dbb4458051f1739cbeb39aa30699e16955f50618f2c0",
+      "width": 1448,
+      "height": 1086
+    },
+    {
+      "src": "assets/images/cream-navy-3d-style-study-20261029/04-round1-task-decomposition.png",
+      "caption": "图 4 · 首轮试画 A · 拆解任务",
+      "stage": "round1",
+      "theme": "拆解任务",
+      "promptTemplate": null,
+      "sha256": "1bfb0483eec7be1677c50f23dfaa53fd29230c8eab3b8e1c0920383378093f88",
+      "width": 1448,
+      "height": 1086
+    },
+    {
+      "src": "assets/images/cream-navy-3d-style-study-20261029/05-round1-focus.png",
+      "caption": "图 5 · 首轮试画 B · 专注",
+      "stage": "round1",
+      "theme": "专注",
+      "promptTemplate": null,
+      "sha256": "bd3b6bf5dcb00081e28eb870c0dcff3939df82cc3dd7ac740865541025023fdd",
+      "width": 1448,
+      "height": 1086
+    },
+    {
+      "src": "assets/images/cream-navy-3d-style-study-20261029/06-round2-task-decomposition.png",
+      "caption": "图 6 · 第二轮试画 A · 拆解任务",
+      "stage": "round2",
+      "theme": "拆解任务",
+      "promptTemplate": "assets/files/cream-navy-3d-style-study-20261029/prompt-v2.txt",
+      "sha256": "212bf8ca955b5ab852d85e6c57f6e1907f44d2fcb21dd9841f7d58e2b8730304",
+      "width": 1448,
+      "height": 1086
+    },
+    {
+      "src": "assets/images/cream-navy-3d-style-study-20261029/07-round2-focus.png",
+      "caption": "图 7 · 第二轮试画 B · 专注",
+      "stage": "round2",
+      "theme": "专注",
+      "promptTemplate": "assets/files/cream-navy-3d-style-study-20261029/prompt-v2.txt",
+      "sha256": "2617ea32042e73d53194ab88b5abbc8dacd05dcfd6f610ff4dc83defb92b7da0",
+      "width": 1448,
+      "height": 1086
+    }
+  ],
+  "references": [
+    {
+      "src": "assets/images/cream-navy-3d-style-study-20261029/ref-01-monthly-pass-meter.png",
+      "caption": "正向参考 1 · 月票与计量表",
+      "evaluation": "positive",
+      "sha256": "3d27854cba85af646e640262365cc3010869f3734e86f96d196f67fcfafb4bb6",
+      "width": 1448,
+      "height": 1086
+    },
+    {
+      "src": "assets/images/cream-navy-3d-style-study-20261029/ref-02-understand-vs-draw.png",
+      "caption": "正向参考 2 · 看懂不等于画出",
+      "evaluation": "positive",
+      "sha256": "d46857088cf5ea7cc8c3fcf43e05642b1be767892e4181faa8582cf006967d95",
+      "width": 1448,
+      "height": 1086
+    },
+    {
+      "src": "assets/images/cream-navy-3d-style-study-20261029/ref-03-same-task-trial.png",
+      "caption": "正向参考 3 · 同题试用",
+      "evaluation": "positive",
+      "sha256": "16177853cc4ea82f4aeb917fd2c03170df27f3762721959de923ed516a1b9f90",
+      "width": 1448,
+      "height": 1086
+    },
+    {
+      "src": "assets/images/cream-navy-3d-style-study-20261029/ref-04-desktop-context.png",
+      "caption": "正向参考 4 · 桌面上的上下文",
+      "evaluation": "positive",
+      "sha256": "3c33321b96576e8615c641210d7730064bf9c554b8e10871615a7bbdf3a2306d",
+      "width": 1448,
+      "height": 1086
+    },
+    {
+      "src": "assets/images/cream-navy-3d-style-study-20261029/ref-05-before-wall.png",
+      "caption": "正向参考 5 · 趁骨架还没封墙",
+      "evaluation": "positive",
+      "sha256": "e414c0cfc01877b354fbd9f13fd75f38887eac60b8aa81ecf32c3941ef5afea2",
+      "width": 1448,
+      "height": 1086
+    },
+    {
+      "src": "assets/images/cream-navy-3d-style-study-20261029/ref-06-negative-guardrails.png",
+      "caption": "反例 · 方案的护栏（用户评价：低幼）",
+      "evaluation": "negative",
+      "sha256": "fc66fc20547ac345c4828f27dbd2bf8f70552d880e6cbb2c1a3f82ec0f8ae9b0",
+      "width": 1448,
+      "height": 1086
+    }
+  ],
+  "versions": [
+    {
+      "src": "assets/files/cream-navy-3d-style-study-20261029/final-prompt.txt",
+      "sha256": "e647796c0fa1e099a60274d0f79d47c554d97cdc9f0017f2eca980b2c08f2d06",
+      "originalFilename": "通用风格提示词.txt"
+    },
+    {
+      "src": "assets/files/cream-navy-3d-style-study-20261029/orange-focus-prompt.txt",
+      "sha256": "e647796c0fa1e099a60274d0f79d47c554d97cdc9f0017f2eca980b2c08f2d06",
+      "originalFilename": "通用风格提示词_聚焦配色版.txt"
+    },
+    {
+      "src": "assets/files/cream-navy-3d-style-study-20261029/prompt-v2.txt",
+      "sha256": "eab41ef2fd0f3d5be65fed6bf6633ee856331c9e7ae1fa8d9184f527c32b4130",
+      "originalFilename": "通用风格提示词_v2.txt"
+    },
+    {
+      "src": "assets/files/cream-navy-3d-style-study-20261029/prompt-v3.txt",
+      "sha256": "5dd89aa635a38747d621d61133ee83d6ab95911250fae783d438fb24043e5cc4",
+      "originalFilename": "通用风格提示词_v3.txt"
+    }
+  ]
+}

@@ -2,7 +2,7 @@ import { readFile } from 'node:fs/promises';
 
 export const ITEM_TYPES = ['prompt', 'image', 'tutorial'];
 export const ITEM_STATUSES = ['inbox', 'organized', 'used'];
-const ITEM_KEYS = ['id', 'type', 'title', 'summary', 'tags', 'createdAt', 'source', 'content', 'image', 'gallery', 'generation', 'attachments', 'notes', 'related', 'status', 'topics'];
+const ITEM_KEYS = ['id', 'type', 'layout', 'title', 'summary', 'tags', 'createdAt', 'source', 'content', 'image', 'gallery', 'generation', 'attachments', 'notes', 'related', 'status', 'topics'];
 
 function object(value) {
   return value !== null && typeof value === 'object' && !Array.isArray(value);
@@ -82,6 +82,7 @@ export function validateLibrary(library) {
     if (ids.has(item.id)) errors.push(`${path}.id: duplicate ID "${item.id}"`);
     ids.add(item.id);
     if (!ITEM_TYPES.includes(item.type)) errors.push(`${path}.type: expected prompt, image, or tutorial`);
+    if ('layout' in item && item.layout !== 'prompt-results-process') errors.push(`${path}.layout: expected prompt-results-process`);
     nonempty(item.title, `${path}.title`, errors);
     nonempty(item.summary, `${path}.summary`, errors);
     stringList(item.tags, `${path}.tags`, errors);

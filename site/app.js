@@ -264,6 +264,8 @@
     if (!item) { toast('这条收藏暂时没有找到'); return; }
     const root = $('#detail-content');
     root.replaceChildren();
+    const processLayout = item.layout === 'prompt-results-process';
+    root.classList.toggle('process-layout', processLayout);
     const meta = el('div', 'detail-meta');
     meta.append(el('span', `type-pill ${item.type}`, names[item.type]), el('span', '', `${item.createdAt} · ${statuses[item.status || 'inbox']}`));
     const title = el('h2', '', item.title);
@@ -274,9 +276,10 @@
       generation.append(el('span', '', '使用模型'), el('strong', '', item.generation.model));
       root.append(generation);
     }
-    if (item.attachments?.length) {
+    const appendAttachments = () => {
+      if (!item.attachments?.length) return;
       const attachments = el('section', 'detail-attachments');
-      const heading = el('h3', 'detail-section-title', '附件与技能');
+      const heading = el('h3', 'detail-section-title', processLayout ? '附件与版本' : '附件与技能');
       heading.id = 'attachments-title';
       attachments.setAttribute('aria-labelledby', heading.id);
       attachments.append(heading);
@@ -291,14 +294,37 @@
         attachments.append(link);
       });
       root.append(attachments);
-    }
+    };
     const gallery = item.gallery || [];
+    const appendPrompt = () => {
+      if (!item.content) return;
+      const contentHeading = el('div', 'detail-content-heading');
+      const hasImagePrompts = gallery.some(image => image.prompt);
+      contentHeading.append(el('h3', 'detail-section-title', processLayout ? '提示词' : item.type === 'prompt' || item.generation ? '提示词原文' : hasImagePrompts ? '原始需求与反馈' : '内容与要点'));
+      if (item.type !== 'prompt' && (item.generation || hasImagePrompts || processLayout)) {
+        const copyPrompt = el('button', 'subtle-button');
+        copyPrompt.append(icon('copy'), document.createTextNode(!processLayout && hasImagePrompts ? '复制原始需求与反馈' : '复制提示词'));
+        copyPrompt.addEventListener('click', () => copy(item.content, '完整提示词已复制'));
+        contentHeading.append(copyPrompt);
+      }
+      root.append(contentHeading, el('div', 'detail-content-text', item.content));
+    };
+    if (processLayout) appendPrompt();
+    else appendAttachments();
+    const galleryRoot = processLayout ? el('section', 'detail-results') : root;
+    if (processLayout) {
+      const heading = el('h3', 'detail-section-title', '结果');
+      heading.id = 'results-title';
+      galleryRoot.setAttribute('aria-labelledby', heading.id);
+      galleryRoot.append(heading);
+    }
     if (gallery.length) {
-      for (const [role, label] of [['reference', '参考图'], ['result', '生成结果']]) {
+      const galleryGroups = processLayout ? [['result', '验证结果'], ['reference', '风格参考']] : [['reference', '参考图'], ['result', '生成结果']];
+      for (const [role, label] of galleryGroups) {
         const images = gallery.filter(image => image.role === role);
         if (!images.length) continue;
         const section = el('section', `detail-gallery gallery-${role}`);
-        const heading = el('h3', 'detail-section-title', `${label} · ${images.length} 张`);
+        const heading = el(processLayout ? 'h4' : 'h3', 'detail-section-title', `${label} · ${images.length} 张`);
         heading.id = `gallery-${role}-title`;
         section.setAttribute('aria-labelledby', heading.id);
         section.append(heading);
@@ -327,7 +353,7 @@
           }
           section.append(figure);
         });
-        root.append(section);
+        galleryRoot.append(section);
       }
     }
     const image = imageUrl(item.image?.src);
@@ -335,21 +361,12 @@
       const img = el('img', 'detail-image');
       img.src = image; img.alt = item.image.alt; img.referrerPolicy = 'no-referrer';
       img.addEventListener('error', () => img.replaceWith(el('p', 'detail-notes', '图片暂时无法显示，可以通过下方来源链接查看。')));
-      root.append(img);
+      galleryRoot.append(img);
     }
-    if (item.content) {
-      const contentHeading = el('div', 'detail-content-heading');
-      const hasImagePrompts = gallery.some(image => image.prompt);
-      contentHeading.append(el('h3', 'detail-section-title', item.type === 'prompt' || item.generation ? '提示词原文' : hasImagePrompts ? '原始需求与反馈' : '内容与要点'));
-      if (item.type !== 'prompt' && (item.generation || hasImagePrompts)) {
-        const copyPrompt = el('button', 'subtle-button');
-        copyPrompt.append(icon('copy'), document.createTextNode(hasImagePrompts ? '复制原始需求与反馈' : '复制提示词'));
-        copyPrompt.addEventListener('click', () => copy(item.content, '完整提示词已复制'));
-        contentHeading.append(copyPrompt);
-      }
-      root.append(contentHeading, el('div', 'detail-content-text', item.content));
-    }
-    if (item.notes) root.append(el('h3', 'detail-section-title', '收藏理由与复用思路'), el('p', 'detail-notes', item.notes));
+    if (processLayout) root.append(galleryRoot);
+    else appendPrompt();
+    if (item.notes) root.append(el('h3', 'detail-section-title', processLayout ? '总结过程' : '收藏理由与复用思路'), el('p', 'detail-notes', item.notes));
+    if (processLayout) appendAttachments();
     const tags = el('div', 'detail-tags');
     [...item.tags, ...(item.topics || []).map(topic => `主题：${topic}`)].forEach(tag => tags.append(el('span', '', tag)));
     root.append(tags);
@@ -396,29 +413,33 @@
   }
 
   function itemMarkdown(item) {
+    const processLayout = item.layout === 'prompt-results-process';
     const lines = [`## ${escapeMarkdown(item.title)}`, '', `- ID：${item.id}`, `- 类型：${names[item.type]}`, `- 收录：${item.createdAt}`, `- 状态：${statuses[item.status || 'inbox']}`, `- 标签：${item.tags.map(escapeMarkdown).join('、') || '无'}`];
     if (item.topics?.length) lines.push(`- 主题：${item.topics.map(escapeMarkdown).join('、')}`);
     if (item.generation?.model) lines.push(`- 使用模型：${escapeMarkdown(item.generation.model)}`);
     if (item.source?.url) lines.push(`- 来源：<${item.source.url.replace(/</g, '%3C').replace(/>/g, '%3E')}>`, ...(item.source.author ? [`- 作者：${escapeMarkdown(item.source.author)}`] : []));
     lines.push('', escapeMarkdown(item.summary));
+    if (processLayout && item.content) lines.push('', '### 提示词', '', fenced(item.content));
+    if (processLayout) lines.push('', '### 结果');
     const markdownImage = image => {
       const url = imageUrl(image.src);
       return url ? `![${escapeMarkdown(image.alt)}](${url.replace(/\(/g, '%28').replace(/\)/g, '%29')})` : '';
     };
     if (item.gallery?.length) {
-      for (const [role, label] of [['reference', '参考图'], ['result', '生成结果']]) {
+      const galleryGroups = processLayout ? [['result', '验证结果'], ['reference', '风格参考']] : [['reference', '参考图'], ['result', '生成结果']];
+      for (const [role, label] of galleryGroups) {
         const images = item.gallery.filter(image => image.role === role);
         if (!images.length) continue;
-        lines.push('', `### ${label}`);
+        lines.push('', `${processLayout ? '####' : '###'} ${label}`);
         images.forEach(image => {
           if (image.caption) lines.push('', escapeMarkdown(image.caption));
           lines.push('', markdownImage(image));
-          if (image.prompt) lines.push('', '#### 本图提示词', '', fenced(image.prompt));
+          if (image.prompt) lines.push('', `${processLayout ? '#####' : '####'} 本图提示词`, '', fenced(image.prompt));
         });
       }
     } else if (item.image?.src) lines.push('', markdownImage(item.image));
-    if (item.content) lines.push('', item.type === 'prompt' || item.generation ? '### 提示词原文' : '### 内容', '', fenced(item.content));
-    if (item.notes) lines.push('', '### 收藏理由与复用思路', '', escapeMarkdown(item.notes));
+    if (!processLayout && item.content) lines.push('', item.type === 'prompt' || item.generation ? '### 提示词原文' : '### 内容', '', fenced(item.content));
+    if (item.notes) lines.push('', processLayout ? '### 总结过程' : '### 收藏理由与复用思路', '', escapeMarkdown(item.notes));
     if (item.attachments?.length) {
       lines.push('', '### 附件');
       item.attachments.forEach(file => {

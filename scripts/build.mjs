@@ -24,6 +24,21 @@ function fenced(value) {
   return `${fence}text\n${value}${value.endsWith('\n') ? '' : '\n'}${fence}`;
 }
 
+function appendGallery(lines, item, groups = [['reference', '## 参考图'], ['result', '## 生成结果']], promptHeading = '### 本图提示词') {
+  if (item.gallery?.length) {
+    for (const [role, heading] of groups) {
+      const images = item.gallery.filter(image => image.role === role);
+      if (!images.length) continue;
+      lines.push(heading, '');
+      for (const image of images) {
+        lines.push(`![${escapeMarkdown(image.alt)}](${linkUrl(isAssetPath(image.src) ? `../${image.src}` : image.src)})`, '');
+        if (image.caption) lines.push(escapeMarkdown(image.caption), '');
+        if (image.prompt) lines.push(promptHeading, '', fenced(image.prompt), '');
+      }
+    }
+  } else if (item.image) lines.push(`![${escapeMarkdown(item.image.alt)}](${linkUrl(isAssetPath(item.image.src) ? `../${item.image.src}` : item.image.src)})`, '');
+}
+
 function itemMarkdown(item) {
   const lines = [
     '---',
@@ -45,19 +60,15 @@ function itemMarkdown(item) {
     ...(item.generation ? [`- 使用模型：${escapeMarkdown(item.generation.model)}`] : []),
     '',
   ];
-  if (item.gallery?.length) {
-    for (const [role, heading] of [['reference', '参考图'], ['result', '生成结果']]) {
-      const images = item.gallery.filter(image => image.role === role);
-      if (!images.length) continue;
-      lines.push(`## ${heading}`, '');
-      for (const image of images) {
-        lines.push(`![${escapeMarkdown(image.alt)}](${linkUrl(isAssetPath(image.src) ? `../${image.src}` : image.src)})`, '');
-        if (image.caption) lines.push(escapeMarkdown(image.caption), '');
-        if (image.prompt) lines.push('### 本图提示词', '', fenced(image.prompt), '');
-      }
-    }
-  } else if (item.image) lines.push(`![${escapeMarkdown(item.image.alt)}](${linkUrl(isAssetPath(item.image.src) ? `../${item.image.src}` : item.image.src)})`, '');
-  if (item.content) lines.push(item.type === 'prompt' ? '## 提示词' : item.type === 'image' && item.generation ? '## 提示词原文' : '## 内容', '', fenced(item.content), '');
+  const processLayout = item.layout === 'prompt-results-process';
+  if (processLayout) {
+    lines.push('## 提示词', '', fenced(item.content || ''), '', '## 结果', '');
+    appendGallery(lines, item, [['result', '### 验证结果'], ['reference', '### 风格参考']], '#### 本图提示词');
+    lines.push('## 总结过程', '', escapeMarkdown(item.notes || ''), '');
+  } else {
+    appendGallery(lines, item);
+    if (item.content) lines.push(item.type === 'prompt' ? '## 提示词' : item.type === 'image' && item.generation ? '## 提示词原文' : '## 内容', '', fenced(item.content), '');
+  }
   if (item.attachments?.length) {
     lines.push('## 附件', '');
     for (const attachment of item.attachments) {
@@ -65,7 +76,7 @@ function itemMarkdown(item) {
       if (attachment.description) lines.push(escapeMarkdown(attachment.description), '');
     }
   }
-  if (item.notes) lines.push('## 收藏备注', '', escapeMarkdown(item.notes), '');
+  if (!processLayout && item.notes) lines.push('## 收藏备注', '', escapeMarkdown(item.notes), '');
   if (item.related?.length) lines.push('## 相关收藏', '', ...item.related.map(id => `- [${escapeMarkdown(id)}](./${id}.md)`), '');
   lines.push(`[返回全部收藏](./index.md) · [读取 JSON](../api/items/${item.id}.json)`, '');
   return lines.join('\n');
