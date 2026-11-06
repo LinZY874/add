@@ -16,6 +16,13 @@
     return node;
   }
 
+  function promptContent(tag, className, text) {
+    const node = el(tag, className);
+    const parts = text.split(/(?<![\\*])\*\*([^*\r\n]+)(?<!\\)\*\*(?!\*)/u);
+    parts.forEach((part, index) => node.append(index % 2 ? el('strong', '', part) : part));
+    return node;
+  }
+
   function icon(name, small = false) {
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('class', small ? 'icon small' : 'icon');
@@ -195,7 +202,7 @@
   function cardVisual(item) {
     const visual = el('span', `card-visual ${item.type}`);
     visual.setAttribute('aria-hidden', 'true');
-    if (item.type === 'prompt') visual.append(el('span', 'card-prompt-preview', item.content));
+    if (item.type === 'prompt') visual.append(promptContent('span', 'card-prompt-preview', item.content));
     else if (item.type === 'image') {
       const url = imageUrl(item.image?.src);
       if (url) {
@@ -225,14 +232,15 @@
     const meta = el('span', 'card-meta');
     meta.append(el('span', `type-pill ${item.type}`, names[item.type]), el('span', '', statuses[item.status || 'inbox']));
     body.append(meta, el('h3', '', item.title), el('p', '', item.summary));
-    open.append(cardVisual(item), body);
+    const visual = cardVisual(item);
+    open.append(visual, body);
     const tags = el('div', 'card-tags');
     item.tags.slice(0, 4).forEach(tag => tags.append(el('span', '', `# ${tag}`)));
     const footer = el('div', 'card-footer');
     const copyButton = el('button');
     copyButton.setAttribute('aria-label', item.type === 'prompt' ? `复制提示词：${item.title}` : `复制收藏：${item.title}`);
     copyButton.append(icon('copy'), document.createTextNode(item.type === 'prompt' ? '复制提示词' : '复制收藏'));
-    copyButton.addEventListener('click', () => copy(item.type === 'prompt' ? item.content : itemMarkdown(item)));
+    copyButton.addEventListener('click', () => copy(item.type === 'prompt' ? visual.textContent : itemMarkdown(item)));
     footer.append(el('span', '', item.createdAt), copyButton);
     article.append(open, footer, tags);
     return article;
@@ -296,6 +304,9 @@
       root.append(attachments);
     };
     const gallery = item.gallery || [];
+    const contentText = item.type === 'prompt'
+      ? promptContent('div', 'detail-content-text', item.content)
+      : el('div', 'detail-content-text', item.content);
     const appendPrompt = () => {
       if (!item.content) return;
       const contentHeading = el('div', 'detail-content-heading');
@@ -307,7 +318,7 @@
         copyPrompt.addEventListener('click', () => copy(item.content, '完整提示词已复制'));
         contentHeading.append(copyPrompt);
       }
-      root.append(contentHeading, el('div', 'detail-content-text', item.content));
+      root.append(contentHeading, contentText);
     };
     if (processLayout) appendPrompt();
     else appendAttachments();
@@ -388,7 +399,7 @@
     const actions = el('div', 'detail-actions');
     const copyButton = el('button', 'button button-dark');
     copyButton.append(icon('copy'), document.createTextNode(item.type === 'prompt' ? '复制提示词' : '复制收藏内容'));
-    copyButton.addEventListener('click', () => copy(item.type === 'prompt' ? item.content : itemMarkdown(item)));
+    copyButton.addEventListener('click', () => copy(item.type === 'prompt' ? contentText.textContent : itemMarkdown(item)));
     const permalink = el('button', 'button button-light', '复制分享链接');
     permalink.addEventListener('click', () => copy(new URL(`#item=${encodeURIComponent(item.id)}`, location.href).href, '已复制这条收藏的链接'));
     const json = outsideLink(new URL(`api/items/${encodeURIComponent(item.id)}.json`, document.baseURI).href, 'JSON ↗', 'button button-light');
