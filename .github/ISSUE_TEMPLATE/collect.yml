@@ -1,5 +1,5 @@
 name: 添加一条收藏
-description: 收集提示词、风格化图片或教程链接；整理后进入网站。
+description: 收集提示词、风格化图片或链接；整理后进入网站。
 title: "[收藏] "
 body:
   - type: dropdown
@@ -9,7 +9,7 @@ body:
       options:
         - 提示词
         - 风格化图片
-        - 教程链接
+        - 链接
     validations:
       required: true
   - type: input
@@ -28,7 +28,7 @@ body:
     id: material
     attributes:
       label: 素材与上下文
-      description: 粘贴提示词、教程链接或图片来源，并说明必要的上下文。上传图片前请确认可以公开分享。
+      description: 粘贴提示词、链接或图片来源，并说明必要的上下文。上传图片前请确认可以公开分享。
     validations:
       required: true
   - type: textarea

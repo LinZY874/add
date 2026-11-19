@@ -3,7 +3,7 @@
 (() => {
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
-  const names = { prompt: '提示词', image: '风格图片', tutorial: '教程链接' };
+  const names = { prompt: '提示词', image: '风格图片', tutorial: '链接' };
   const statuses = { inbox: '待整理', organized: '已整理', used: '已实践' };
   const state = { library: null, filter: 'all', query: '', tag: '', sort: 'newest', view: 'grid' };
   let toastTimer;
@@ -216,7 +216,7 @@
         visual.append(el('span', 'gallery-count', `${item.gallery.length} 张图片`));
       }
     } else {
-      let host = 'TUTORIAL';
+      let host = 'LINK';
       try { host = new URL(item.source?.url).hostname.replace(/^www\./, ''); } catch {}
       visual.append(el('small', '', host), el('span', '', '↗'));
     }
@@ -483,7 +483,7 @@
     const items = filteredItems();
     download('add-collection.md', `# ADD · 灵感收藏夹\n\n${items.length} 条收藏 · 最近更新 ${state.library.updatedAt}\n\n${items.length ? items.map(itemMarkdown).join('\n---\n\n') : '收藏夹已就位，等待第一条灵感。\n'}`, 'text/markdown;charset=utf-8');
   });
-  $('#copy-intake').addEventListener('click', () => copy('请把下面的内容收进我的 ADD 灵感收藏夹（GitHub：LinZY874/add）：\n\n类型：提示词 / 风格图片 / 教程链接\n内容或链接：\n值得收藏的原因：\n想用于什么：\n标签（可选）：\n作者与出处（如有）：\n\n请保留来源，补充摘要和复用思路。信息不足时先标为待整理，再更新仓库与网站。', '收录格式已复制，粘贴到对话中就能开始'));
+  $('#copy-intake').addEventListener('click', () => copy('请把下面的内容收进我的 ADD 灵感收藏夹（GitHub：LinZY874/add）：\n\n类型：提示词 / 风格图片 / 链接\n内容或链接：\n值得收藏的原因：\n想用于什么：\n标签（可选）：\n作者与出处（如有）：\n\n请保留来源，补充摘要和复用思路。信息不足时先标为待整理，再更新仓库与网站。', '收录格式已复制，粘贴到对话中就能开始'));
   $('#copy-api').addEventListener('click', () => copy(new URL('./api/library.json', document.baseURI).href, '已复制 JSON 内容接口链接'));
 
   function openHashItem() {

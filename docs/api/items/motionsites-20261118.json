@@ -1,0 +1,17 @@
+{
+  "id": "motionsites-20261118",
+  "type": "tutorial",
+  "title": "MotionSites",
+  "summary": "收集网页设计案例和可复用的 AI 建站提示词，可按落地页、首屏、仪表盘等类型浏览。",
+  "tags": [
+    "网站",
+    "网页设计",
+    "AI 建站"
+  ],
+  "createdAt": "2026-11-18",
+  "source": {
+    "url": "https://motionsites.ai/",
+    "title": "MotionSites 官网"
+  },
+  "status": "organized"
+}

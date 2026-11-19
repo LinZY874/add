@@ -8,7 +8,7 @@ const root = fileURLToPath(new URL('../', import.meta.url));
 const site = path.join(root, 'site');
 const output = path.join(root, 'docs');
 const check = process.argv.slice(2).includes('--check');
-const typeLabels = { prompt: '提示词', image: '风格化图片', tutorial: '教程链接' };
+const typeLabels = { prompt: '提示词', image: '风格化图片', tutorial: '链接' };
 
 function escapeMarkdown(value) {
   return value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/([\\`*_{}\[\]()#+.!|])/g, '\\$1');
